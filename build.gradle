@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        maven { url 'https://repo.spring.io/libs-snapshot' }
+        maven { url 'http://repo.spring.io/libs-release' }
+        maven { url "https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-core" }
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
+    }
+}
+
+
+plugins {
+
+    id 'org.springframework.boot' version '1.5.2.RELEASE'
+}
+apply plugin: 'java'
+
+group 'FirstSteps'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+
+sourceCompatibility = 1.7
+
+
+
+
+ext {
+    HelloMessage = 'myCustomPropertyValue'
+    ContextConfig = '/conf.xml'
+}
+
+
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter
+    compile("org.springframework.boot:spring-boot-starter-web")
+    //quite cool stuff, like /health ;)
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+
+
+    //Neo4j
+    // https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-core
+    compile group: 'org.neo4j', name: 'neo4j-ogm-core', version: '3.0.0-M01'
+    // https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-bolt-driver
+    runtime group: 'org.neo4j', name: 'neo4j-ogm-bolt-driver', version: '3.0.0-M01'
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+
+
+
+jar {
+    from configurations.runtime
+    manifest {
+        attributes(
+                'Main-Class': 'MainApp',
+                'Implementation-Version': version,
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
+}
