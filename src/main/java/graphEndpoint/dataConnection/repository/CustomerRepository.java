@@ -1,6 +1,6 @@
 package graphEndpoint.repository;
 
-import graphEndpoint.entities.Customer;
+import graphEndpoint.dataConnection.entities.Customer;
 import org.springframework.data.neo4j.repository.GraphRepository;
 
 /**

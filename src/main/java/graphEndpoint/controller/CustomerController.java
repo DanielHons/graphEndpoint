@@ -1,6 +1,6 @@
 package graphEndpoint.controllers;
 
-import graphEndpoint.entities.Customer;
+import graphEndpoint.dataConnection.entities.Customer;
 import graphEndpoint.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

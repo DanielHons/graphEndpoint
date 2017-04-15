@@ -1,4 +1,4 @@
-package graphEndpoint.entities;
+package graphEndpoint.dataConnection.entities;
 
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
