@@ -15,6 +15,6 @@ public class DummyController {
     @ResponseBody
     public String hello()
     {
-        return "Hello";
+        return "HelloWorld";
     }
 }

@@ -17,10 +17,18 @@ public class Customer{
     private Long id;
 
     @Property(name="name")
-    private String fullName;
+    private String name;
 
     @Relationship(type="HAS_ADDRESS", direction=Relationship.OUTGOING)
     private List<Address> addresses;
 
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 

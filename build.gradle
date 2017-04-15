@@ -3,12 +3,15 @@ buildscript {
         maven { url 'https://repo.spring.io/libs-snapshot' }
         maven { url 'http://repo.spring.io/libs-release' }
         maven { url "https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-core" }
+        maven { url 'https://mvnrepository.com/artifact/org.springframework.data/spring-data-neo4j'}
     }
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
     }
 }
+
+
 
 
 plugins {
@@ -20,7 +23,7 @@ apply plugin: 'java'
 group 'FirstSteps'
 version '1.0-SNAPSHOT'
 sourceCompatibility = 1.8
-targetCompatibility = 1.7
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -28,7 +31,9 @@ repositories {
 }
 
 
-sourceCompatibility = 1.7
+
+
+
 
 
 
@@ -36,6 +41,7 @@ sourceCompatibility = 1.7
 ext {
     HelloMessage = 'myCustomPropertyValue'
     ContextConfig = '/conf.xml'
+    neo4jVersion ='2.1.2'
 }
 
 
@@ -48,13 +54,22 @@ dependencies {
 
 
     //Neo4j
-    // https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-core
-    compile group: 'org.neo4j', name: 'neo4j-ogm-core', version: '3.0.0-M01'
-    // https://mvnrepository.com/artifact/org.neo4j/neo4j-ogm-bolt-driver
-    runtime group: 'org.neo4j', name: 'neo4j-ogm-bolt-driver', version: '3.0.0-M01'
+    compile("org.springframework.boot:spring-boot-starter-data-neo4j")
+    testCompile group: 'org.neo4j', name: 'neo4j-kernel', version: '3.1.0-RC1' //Mabye should be compile
+
+    compile group: 'org.neo4j', name: 'neo4j-ogm-core', version: neo4jVersion
+    runtime group: 'org.neo4j', name: 'neo4j-ogm-bolt-driver', version:  neo4jVersion
+    testCompile group: 'org.neo4j', name: 'neo4j-ogm-embedded-driver', version: neo4jVersion
 
 
+    testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile group: 'junit', name: 'junit', version: '4.12'
+
+
+    /*BELOW JUST TESTING */
+
+    //compile group: 'org.neo4j', name: 'neo4j-graphdb-api', version: '3.1.0-RC1'
+    testCompile group: 'org.neo4j', name: 'neo4j-lucene-index', version: '3.1.0-RC1'  //Mabye should be compile
 }
 
 
