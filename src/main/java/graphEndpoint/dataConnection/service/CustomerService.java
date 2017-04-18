@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@ComponentScan("graphEndpoint.dataConnection.repository")
 public class CustomerService {
 
     @Autowired
@@ -16,7 +15,7 @@ public class CustomerService {
 
 
     @Transactional(readOnly = true)
-    public Iterable<Customer> findALl() {
+    public Iterable<Customer> findAll() {
        return customerRepository.findAll();
     }
 

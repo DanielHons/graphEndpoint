@@ -15,9 +15,11 @@
  */
 package graphEndpoint;
 
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Ignore;
+import graphEndpoint.dataConnection.entity.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -37,6 +40,7 @@ import static org.assertj.core.api.BDDAssertions.then;
  *
  * @author Daniel Hons
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MainApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(properties = {"management.port=0"})
@@ -52,11 +56,34 @@ public class MainServerTest {
     private TestRestTemplate testRestTemplate;
 
 
+
     @Test
+    public void shouldReturn401WhenNotLoggedIn() throws Exception {
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
+                "http://localhost:" + this.port + "/", String.class);
+
+        then(entity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+    }
+
+    @Test
+    @WithMockUser(roles={"USER"})
+    public void shouldReturn200WhenSendingRequestToControllerWithRoleUser() throws Exception {
+        @SuppressWarnings("rawtypes")
+        ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
+                "http://localhost:" + this.port + "/customer/all", String.class);
+
+        then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+
+    @Ignore
+    @Test
+    @WithMockUser(roles={"USER"})
     public void shouldReturn200WhenSendingRequestToController() throws Exception {
         @SuppressWarnings("rawtypes")
         ResponseEntity<String> entity = this.testRestTemplate.getForEntity(
-                "http://localhost:" + this.port + "/hello-world", String.class);
+                "http://localhost:" + this.port + "/customer/all", String.class);
 
         then(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }

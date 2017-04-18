@@ -1,5 +1,7 @@
 /**
  * Created by Daniel on 12.04.2017.
+ *
+ * Spring main class
  */
 
 package graphEndpoint;
@@ -13,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/hello-world")
-@ComponentScan
+@RequestMapping("/test")
 @SpringBootApplication
+//@EnableJpaRepositories("de.danielhons.graphendpoint.dataConnection.repository")
 public class MainApp {
 
 
     @RequestMapping(method= RequestMethod.GET)
-    public @ResponseBody String customerInfo(){
+    protected  @ResponseBody String sample(){
 
         return "Test";
     }

@@ -10,7 +10,6 @@ public class SampleTest {
     @Test
     public void findTheError()
     {
-        // Assert.assertEquals("BAR",System.getProperty("FOO"));
-        Assert.assertEquals("Test",(new MainApp()).customerInfo());
+        Assert.assertEquals("Test",(new MainApp()).sample());
     }
 }
