@@ -1,15 +1,18 @@
-package graphEndpoint.controllers;
 
-import graphEndpoint.dataConnection.entities.Customer;
-import graphEndpoint.repository.CustomerRepository;
+package graphEndpoint.controller;
+
+import graphEndpoint.dataConnection.entity.Customer;
+import graphEndpoint.dataConnection.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import org.springframework.http.*;
+import org.springframework.http.MediaType;
 
 
 /**
@@ -19,10 +22,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/customer")
 public class CustomerController {
 
+    //@Autowired
+    private CustomerRepository customerRepository;
 
-    private @Autowired CustomerRepository customerRepository;
+    public CustomerController(){}
 
-
+    /*
+    @Autowired
+    public CustomerController(CustomerRepository customerRepository)
+    {
+        this.customerRepository=customerRepository;
+    }*/
 
     @RequestMapping("/all")
     @ResponseBody
@@ -31,14 +41,11 @@ public class CustomerController {
         return customerRepository.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
     public ResponseEntity<?> create(
-            @RequestParam(value = "name", defaultValue = "Namenloser Strolch") String name) {
-
-        Customer customer=new Customer();
-        customer.setName(name);
-        customer=customerRepository.save(customer);
+            @RequestBody Customer customer) {
+        if (customer!=null) customer=customerRepository.save(customer);
         return new ResponseEntity<Customer>(customer, HttpStatus.OK);
     }
 
