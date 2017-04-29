@@ -1,9 +1,8 @@
 
 package graphEndpoint.dataConnection.controller;
 
-import graphEndpoint.dataConnection.entity.Customer;
+import graphEndpoint.dataConnection.domain.Customer;
 import graphEndpoint.dataConnection.repository.CustomerRepository;
-import graphEndpoint.dataConnection.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
@@ -14,24 +13,28 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 
 
+
+
 /**
  * Created by Daniel on 15.04.2017.
  */
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/api/customer")
 public class CustomerController {
 
     @Autowired
     private CustomerRepository customerRepository;
 
+
+    /*
     @Autowired
     private CustomerService customerService;
-
+    */
     @RequestMapping("/all")
     @ResponseBody
     public Iterable<Customer> findAll()
     {
-        return customerService.findAll();
+        return customerRepository.findAll();
     }
 
     @RequestMapping(method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -43,11 +46,13 @@ public class CustomerController {
     }
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/clear")
+    @RequestMapping(method = RequestMethod.GET, value = "/clear")
     @ResponseBody
-    public ResponseEntity<?> deleteAllt()
+    public ResponseEntity<?> deleteAll()
     {
         customerRepository.deleteAll();
         return new ResponseEntity<>(org.springframework.http.HttpStatus.OK);
     }
+
+
 }
