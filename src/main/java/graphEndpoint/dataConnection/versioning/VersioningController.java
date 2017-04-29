@@ -1,6 +1,6 @@
 package graphEndpoint.dataConnection.versioning;
 
-import graphEndpoint.dataConnection.versioning.domain.CurrentVersionWrapper;
+import graphEndpoint.dataConnection.versioning.domain.VersionPathHead;
 import graphEndpoint.dataConnection.versioning.domain.VersionWrapper;
 import graphEndpoint.dataConnection.versioning.service.VersioningService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class VersioningController {
     {
         VersionedInteger newNode=new VersionedInteger();
         newNode.setValue(5);
-        CurrentVersionWrapper<VersionedInteger> current=versionedIntegerService.create(newNode);
+        VersionPathHead<VersionedInteger> current=versionedIntegerService.create(newNode);
         lastInsertedUuid=current.getHistoryUuid();
         return current;
     }
@@ -31,7 +31,7 @@ public class VersioningController {
     @RequestMapping("/update")
     public VersionWrapper<VersionedInteger> update()
     {
-        CurrentVersionWrapper<VersionedInteger> currentVersion=versionedIntegerService.getCurrentVersion(lastInsertedUuid);
+        VersionPathHead<VersionedInteger> currentVersion=versionedIntegerService.getCurrentVersion(lastInsertedUuid);
         int newValue=currentVersion.getNode().getValue()+1;
         VersionedInteger newNode=new VersionedInteger();
         newNode.setValue(newValue);

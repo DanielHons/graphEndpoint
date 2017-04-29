@@ -10,17 +10,7 @@ import java.util.Date;
  * Created by Daniel Hons on 29.04.2017.
  */
 @NodeEntity
-public class VersionWrapper<T>{
-    @GraphId
-    private Long id;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+public class VersionWrapper<T extends DomainEntity> extends DomainEntity{
 
     @Relationship(type = "holds")
     private T node;

@@ -9,9 +9,9 @@ import java.util.UUID;
  * Created by Daniel Hons on 29.04.2017.
  */
 @NodeEntity(label="Current")
-public class CurrentVersionWrapper<T extends DomainEntity> extends VersionWrapper<T> {
+public class VersionPathHead<T extends DomainEntity> extends VersionWrapper<T> {
 
-    public CurrentVersionWrapper(){
+    public VersionPathHead(){
         super();
         this.setHistoryUuid(UUID.randomUUID().toString());
     }
