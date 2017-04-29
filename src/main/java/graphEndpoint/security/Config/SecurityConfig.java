@@ -1,8 +1,8 @@
+/*
 package graphEndpoint.security.Config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,10 +23,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic().and()
                 .authorizeRequests()
                 .antMatchers("/test").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/customer/**").hasRole("ADMIN").and()
+                .antMatchers("/api/**").hasRole("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/api/login").permitAll().and()
                 .csrf().disable();
     }
 }
+
+*/

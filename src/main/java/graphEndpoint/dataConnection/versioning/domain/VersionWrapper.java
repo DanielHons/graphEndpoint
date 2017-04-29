@@ -2,19 +2,25 @@ package graphEndpoint.dataConnection.versioning.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import graphEndpoint.dataConnection.domain.DomainEntity;
-import org.neo4j.ogm.annotation.Index;
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Property;
-import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.*;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Created by Daniel Hons on 29.04.2017.
  */
 @NodeEntity
-public class Version<T extends VersionedNode> extends DomainEntity{
+public class VersionWrapper<T>{
+    @GraphId
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     @Relationship(type = "holds")
     private T node;
@@ -28,7 +34,7 @@ public class Version<T extends VersionedNode> extends DomainEntity{
 
     @JsonIgnore
     @Relationship(type="previous")
-    private Version<T> previousVersion=null;
+    private VersionWrapper<T> previousVersionWrapper =null;
 
     public T getNode() {
         return node;
@@ -47,15 +53,15 @@ public class Version<T extends VersionedNode> extends DomainEntity{
     }
 
     @JsonIgnore
-    public Version<T> getPreviousVersion() {
-        return previousVersion;
+    public VersionWrapper<T> getPreviousVersionWrapper() {
+        return previousVersionWrapper;
     }
 
-    public void setPreviousVersion(Version<T> previousVersion) {
-        this.previousVersion = previousVersion;
+    public void setPreviousVersionWrapper(VersionWrapper<T> previousVersionWrapper) {
+        this.previousVersionWrapper = previousVersionWrapper;
     }
 
-    public Version() {
+    public VersionWrapper() {
         this.updatedAt = (new Date()).getTime();
     }
 

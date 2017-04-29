@@ -15,11 +15,9 @@
  */
 package graphEndpoint;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.Ignore;
-import graphEndpoint.dataConnection.entity.Customer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

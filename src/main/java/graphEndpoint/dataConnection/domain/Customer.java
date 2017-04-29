@@ -1,4 +1,4 @@
-package graphEndpoint.dataConnection.entity;
+package graphEndpoint.dataConnection.domain;
 
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Property;
@@ -12,30 +12,36 @@ import java.util.List;
 @NodeEntity(label = "Customer")
 public class Customer extends DomainEntity{
 
-    @Property(name="name")
-    private String name;
-
-
+    @Property(name="name") private String name;
     public void setName(String name) {
         this.name = name;
     }
-
     public String getName() {
         return name;
     }
 
+
+    @Property(name="createdAt") DomainEntity createdAt;
+
+    public DomainEntity getCreatedAt() {
+        return createdAt;
+    }
+
+
+    @Property(name="address") private Address address;
+    public Address getAddress() {return address;}
+    public void setAddress(Address address) {this.address = address;}
+
+
+
     @Relationship(type="CONTACT_PERSON", direction = Relationship.INCOMING)
     private List<Person> contactPersons;
-
-    @Relationship(type="HAS_ADDRESS", direction=Relationship.OUTGOING)
-    private List<Address> addresses;
-
     public List<Person> getContactPersons() {
         return contactPersons;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
-    }
+
+    public void addContact(Person person){contactPersons.add(person);}
+
 }
 

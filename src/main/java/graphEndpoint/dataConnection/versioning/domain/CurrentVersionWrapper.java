@@ -1,5 +1,6 @@
 package graphEndpoint.dataConnection.versioning.domain;
 
+import graphEndpoint.dataConnection.domain.DomainEntity;
 import org.neo4j.ogm.annotation.NodeEntity;
 
 import java.util.UUID;
@@ -8,20 +9,20 @@ import java.util.UUID;
  * Created by Daniel Hons on 29.04.2017.
  */
 @NodeEntity(label="Current")
-public class CurrentVersion<T extends VersionedNode> extends Version<T> {
+public class CurrentVersionWrapper<T extends DomainEntity> extends VersionWrapper<T> {
 
-    public CurrentVersion(){
+    public CurrentVersionWrapper(){
         super();
         this.setHistoryUuid(UUID.randomUUID().toString());
     }
 
-    public Version<T> createPrevious()
+    public VersionWrapper<T> createPrevious()
     {
-        Version<T> previous=new Version<>();
+        VersionWrapper<T> previous=new VersionWrapper<>();
         previous.setHistoryUuid(this.getHistoryUuid());
-        previous.setPreviousVersion(this.getPreviousVersion());
+        previous.setPreviousVersionWrapper(this.getPreviousVersionWrapper());
         previous.setNode(this.getNode());
-        this.setPreviousVersion(previous);
+        this.setPreviousVersionWrapper(previous);
         return previous;
     }
 }
